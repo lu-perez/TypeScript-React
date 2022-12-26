@@ -1,39 +1,33 @@
-import React, { useState } from 'react'
+import React from 'react'
+import { useNewSubForm } from '../hooks/useNewSubForm'
 import { Sub } from '../types'
-
-interface FormState {
-  inputValue: Sub
-}
 
 interface FormProps {
   onNewSub: (newSub: Sub) => void
 }
 
-const INITIAL_STATE = {
-  name: '',
-  subMonths: 0,
-  avatar: '',
-  description: ''
-}
+const FormWithReducer = ({ onNewSub }: FormProps) => {
+  const [inputValues, dispatch] = useNewSubForm()
 
-const Form = ({ onNewSub }: FormProps) => {
-  const [inputValues, setInputValues] = useState<FormState['inputValue']>(INITIAL_STATE)
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setInputValues({
-      ...inputValues,
-      [e.target.name]: e.target.value
+  const handleChange = (evt: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = evt.target
+    dispatch({
+      type: 'change_value',
+      payload: {
+        inputName: name,
+        inputValue: value
+      }
     })
   }
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     onNewSub(inputValues)
-    handleClear()
+    dispatch({ type: 'clear' })
   }
 
   const handleClear = () => {
-    setInputValues(INITIAL_STATE)
+    dispatch({ type: 'clear' })
   }
 
   return (
@@ -67,4 +61,4 @@ const Form = ({ onNewSub }: FormProps) => {
   )
 }
 
-export default Form
+export default FormWithReducer

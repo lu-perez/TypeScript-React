@@ -3,7 +3,8 @@ import { Sub } from './types'
 import List from './components/List'
 import initialSubs from '../data/subs.json'
 import Parent from './components/Parent'
-import Form from './components/Form'
+// import Form from './components/Form'
+import FormWithReducer from './components/FormWithReducer'
 import './App.css'
 
 interface AppState {
@@ -27,7 +28,8 @@ function App() {
     <>
       <h1>TypeScript + React</h1>
       <List subs={subs}/>
-      <Form onNewSub={handleNewSub} />
+      {/* <Form onNewSub={handleNewSub} /> */}
+      <FormWithReducer onNewSub={handleNewSub} />
 
       <div ref={divRef}>
         <h2>UseRef Example</h2>
