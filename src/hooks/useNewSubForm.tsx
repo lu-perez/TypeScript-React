@@ -1,4 +1,4 @@
-import { useReducer } from 'react'
+import { useCallback, useReducer } from 'react'
 import { Sub } from '../types'
 
 const INITIAL_STATE = {
@@ -36,5 +36,14 @@ const formReducer = (state: FormState['inputValues'], action: FormReducerAction)
 }
 
 export const useNewSubForm = () => {
-  return useReducer(formReducer, INITIAL_STATE)
+  const [inputValues, dispatch] = useReducer(formReducer, INITIAL_STATE)
+
+  const changeValue = useCallback((payload: { inputName: string, inputValue: string}) => { dispatch({ type: 'change_value', payload })}, [])
+  const clearForm = useCallback(() => dispatch({ type: 'clear' }), [])
+  
+  return {
+    formState: inputValues,
+    changeValue,
+    clearForm
+  }
 }

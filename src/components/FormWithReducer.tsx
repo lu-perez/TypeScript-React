@@ -7,50 +7,44 @@ interface FormProps {
 }
 
 const FormWithReducer = ({ onNewSub }: FormProps) => {
-  const [inputValues, dispatch] = useNewSubForm()
+  const { formState, changeValue, clearForm } = useNewSubForm()
 
   const handleChange = (evt: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = evt.target
-    dispatch({
-      type: 'change_value',
-      payload: {
-        inputName: name,
-        inputValue: value
-      }
-    })
+    changeValue({ inputName: name, inputValue: value })
   }
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    onNewSub(inputValues)
-    dispatch({ type: 'clear' })
+    onNewSub(formState)
+    clearForm()
   }
 
   const handleClear = () => {
-    dispatch({ type: 'clear' })
+    clearForm()
   }
 
   return (
     <div>
       <form onSubmit={handleSubmit}>
         <input
-          value={inputValues.name}
+          value={formState.name}
           type="text" name="name"
           placeholder="name"
           onChange={handleChange} />
         <input
-          value={inputValues.subMonths}
+          value={formState.subMonths}
           type="number" name="subMonths"
           placeholder="subMonths" 
           onChange={handleChange} />
         <input 
-          value={inputValues.avatar}
+          value={formState.avatar}
           type="text"
           name="avatar"
           placeholder="avatar"
           onChange={handleChange} />
         <textarea
-          value={inputValues.description}
+          value={formState.description}
           name="description"
           placeholder="description"
           onChange={handleChange} />
