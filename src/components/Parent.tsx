@@ -1,5 +1,5 @@
 import React from 'react'
-import { Sub } from '../interfaces/interfaces'
+import { Sub } from '../types'
 
 interface Props {
   children: string, // React.ReactNode instead any

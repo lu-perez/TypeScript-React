@@ -1,7 +1,16 @@
 import React, { useState } from 'react'
+import { Sub } from '../types'
 
-const Form = () => {
-  const [inputValues, setInputValues] = useState({
+interface FormState {
+  inputValue: Sub
+}
+
+interface FormProps {
+  onNewSub: (newSub: Sub) => void
+}
+
+const Form = ({ onNewSub }: FormProps) => {
+  const [inputValues, setInputValues] = useState<FormState['inputValue']>({
     name: '',
     subMonths: 0,
     avatar: '',
@@ -17,7 +26,7 @@ const Form = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    console.log(e)
+    onNewSub(inputValues)
   }
 
   return (
