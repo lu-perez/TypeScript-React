@@ -38,7 +38,7 @@ const formReducer = (state: FormState['inputValues'], action: FormReducerAction)
 export const useNewSubForm = () => {
   const [inputValues, dispatch] = useReducer(formReducer, INITIAL_STATE)
 
-  const changeValue = useCallback((payload: { inputName: string, inputValue: string}) => { dispatch({ type: 'change_value', payload })}, [])
+  const changeValue = useCallback((payload: { inputName: string, inputValue: string }) => { dispatch({ type: 'change_value', payload })}, [])
   const clearForm = useCallback(() => dispatch({ type: 'clear' }), [])
   
   return {
